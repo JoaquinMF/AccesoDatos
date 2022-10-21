@@ -5,10 +5,74 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public abstract class AnimalDAO {
 	
 	private static Connection connection;
+	
+	public static void uptateAnimal (Animal animal) {
+		connection = openConnection();
+		
+		
+		int id = animal.getId();
+		String nombre=animal.getNombre();
+		String habitat=animal.getHabitat();
+		double pesoAproximado=animal.getPeso_aproximado();
+		String query ="update animal set nombre = ?, habitat = ?, peso_aproximado=? where id = ?";
+		
+		try {
+			PreparedStatement ps=connection.prepareStatement(query);
+			
+			ps.setString(1,nombre);
+		    ps.setString(2,habitat);
+		    ps.setDouble(3,pesoAproximado);
+		    ps.setInt(4, id);
+		    
+		    ps.executeUpdate();
+		    
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+		
+	}
+	
+	
+	
+	public static ArrayList<Animal> findAllAnimales(){
+		connection = openConnection();
+		
+		ArrayList<Animal> animales=new ArrayList<>();
+		Animal animal=null;
+		String query ="select * from animales";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+			animal = new Animal(rs.getInt("id"),rs.getString("nombre"),rs.getString("habitat"),rs.getDouble("peso_aproximado"));
+			
+			animales.add(animal);
+		}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+		
+		
+		return animales;
+	}
+	
 	
 	public static Animal findById(int id) {
 		

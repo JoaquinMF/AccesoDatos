@@ -9,8 +9,15 @@ public class Main {
 		//AnimalDAO.deleteAnimalByNombre("Ardilla");
 		
 		
-		Animal b = AnimalDAO.findById(3);
-		System.out.println(b);
+		//Animal b = AnimalDAO.findById(3);
+		//System.out.println(b);
+		
+		//System.out.println(AnimalDAO.findAllAnimales());
+		
+		Animal a = AnimalDAO.findById(3);
+		a.setPeso_aproximado(20);
+		
+		System.out.println(a);
 		
 		
 	}

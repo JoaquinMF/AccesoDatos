@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import pojo.Serie;
+import pojo.Temporada;
 
 
 
@@ -133,6 +134,39 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie> {
 		
 	}
 
+	
+	public ArrayList<Temporada> obtenerTemporadas(Serie serie){
+		
+		ArrayList<Temporada> temporadas = new ArrayList<>();
+		
+		connection = openConnection();
+		
+		String query ="SELECT * FROM temporada WHERE serie_id = ?";
+		
+		try {
+			PreparedStatement ps=connection.prepareStatement(query);
+			ps.setInt(1,serie.getId());
+			
+			ResultSet rs=ps.executeQuery();
+			
+			while(rs.next()) {
+				Temporada temporada =new Temporada(rs.getInt("id"),rs.getInt("num_temporada"),rs.getString("titulo"),serie);				
+				
+				temporadas.add(temporada);
+				
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+		
+		return null;
+		
+	}
+	
+	
 	@Override
 	public void borrar(Serie t) {
 		

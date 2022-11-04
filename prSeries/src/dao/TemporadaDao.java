@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import pojo.Temporada;
 import util.DatabaseConnection;
 
-public class TemporadaDao implements InterfazDao<Temporada> {
+public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada> {
 	
 	private static Connection connection;
 	
@@ -19,13 +19,13 @@ public class TemporadaDao implements InterfazDao<Temporada> {
 	
 	@Override
 	public ArrayList<Temporada> buscarTodos() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public Temporada buscarPorId(int i) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -54,32 +54,17 @@ public class TemporadaDao implements InterfazDao<Temporada> {
 
 	@Override
 	public void modificar(Temporada t) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void borrar(Temporada t) {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 	
-	private static Connection openConnection() {
-		DatabaseConnection dbConnection=new DatabaseConnection();
-		connection =dbConnection.getConnection();
-		return connection;
-	}
 	
-	private static void closeConnection() {
-		
-		try {
-			connection.close();
-			connection=null;
-		}catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		
-	}
 
 }

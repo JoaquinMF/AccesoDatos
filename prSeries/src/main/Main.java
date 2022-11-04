@@ -31,12 +31,19 @@ public class Main {
 		ArrayList<Serie> series= serieDao.buscarTodos();
 		
 		Serie los_simpson=serieDao.buscarPorId(1);
-		los_simpson.setPlataforma("Netflix");
+		
+		ArrayList<Temporada> temporadas=serieDao.obtenerTemporadas(los_simpson);
+		
+		for (Temporada temporada : temporadas) {
+			System.out.println(temporada);
+		}
+		
+		/*los_simpson.setPlataforma("Netflix");
 		serieDao.modificar(los_simpson);
 		
 		for(Serie serie : series) {
 		System.out.println(series);
-		}
+		}*/
 		
 		
 		

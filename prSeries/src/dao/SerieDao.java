@@ -141,7 +141,7 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie> {
 		
 		connection = openConnection();
 		
-		String query ="SELECT * FROM temporada WHERE serie_id = ?";
+		String query ="SELECT * FROM temporadas WHERE serie_id = ?";
 		
 		try {
 			PreparedStatement ps=connection.prepareStatement(query);
@@ -162,7 +162,7 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie> {
 		
 		closeConnection();
 		
-		return null;
+		return temporadas;
 		
 	}
 	

@@ -13,7 +13,7 @@ public class Main {
 		
 		//Serie serie =new Serie("Los Simpsons",7,"Disney Plus");
 		
-		SerieDao serieDao=new SerieDao();
+		/*SerieDao serieDao=new SerieDao();
 		
 		//serieDao.insertar(serie);
 		
@@ -45,6 +45,28 @@ public class Main {
 		System.out.println(series);
 		}*/
 		
+		/*
+		
+		
+	
+		Temporada t1=new Temporada(1,"Los Simpsons",s);
+		Temporada t2=new Temporada(2,"Los Simpsons",s);
+		Temporada t3=new Temporada(3,"Los Simpsons",s);
+		
+		temporadaDao.insertar(t1);
+		temporadaDao.insertar(t2);
+		temporadaDao.insertar(t3);*/
+		
+		/*SerieDao serieDao=new SerieDao();
+		TemporadaDao temporadaDao=new TemporadaDao();
+		Serie s = serieDao.buscarPorId(1);
+		
+		temporadaDao.borrarPorSerie(1);*/
+		
+		SerieDao serieDao=new SerieDao();
+		
+		Serie s=serieDao.buscarPorId(1);
+		serieDao.borrar(s);
 		
 		
 		

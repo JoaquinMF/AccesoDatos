@@ -58,7 +58,7 @@ public class Pelicula {
 		return sala;
 	}
 
-	public void setSala_id(Sala sala) {
+	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
 

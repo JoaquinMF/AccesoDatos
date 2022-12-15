@@ -118,7 +118,7 @@ public class SalaDao extends ObjetoDao implements InterfazDao<Sala>{
 			ps.setInt(1,numero);
 		    ps.setString(2,horario);
 		    ps.setInt(3,asientos);
-		    ps.setInt(5, id);
+		    ps.setInt(4,id);
 		    
 		    ps.executeUpdate();
 		    

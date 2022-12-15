@@ -111,16 +111,16 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 		int edad=pelicula.getEdad();
 		String cine=pelicula.getCine();
 		Sala sala=pelicula.getSala();
-		String query ="update series set titulo = ?, edad = ?, cine = ?, sala_id where id = ?";
+		String query ="update series set titulo = ?, edad = ?, cine = ?, sala_id = ? where id = ?";
 		
 		try {
 			PreparedStatement ps=connection.prepareStatement(query);
 			
-			ps.setInt(1,numero);
-		    ps.setString(2,horario);
-		    ps.setInt(3,asientos);
+			ps.setString(1,titulo);
+		    ps.setInt(2,edad);
+		    ps.setString(3,cine);
+		    ps.setInt(4,sala.getId());
 		    ps.setInt(5, id);
-		    
 		    ps.executeUpdate();
 		    
 			
@@ -136,11 +136,52 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 	}
 
 	@Override
-	public void borrar(Pelicula t) {
+	public void borrar(Pelicula pelicula) {
+		
+		connection=openConnection();
+		
+		int id=pelicula.getId();
+		
+		String query="DELETE FROM peliculas WHERE id = ?";
+		
+		try {
+			PreparedStatement ps= connection.prepareStatement(query);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+				
+		closeConnection();	
 		
 		
 	}
 
+	
+	public void borrarPorSala (int sala_id) {
+		
+		connection=openConnection();
+		
+		String query = "DELETE FROM peliculas WHERE sala_id=?";
+		
+		try {
+			
+			PreparedStatement ps=connection.prepareStatement(query);
+			ps.setInt(1, sala_id);
+			ps.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+		
+		
+		
+	}
 	
 	
 	

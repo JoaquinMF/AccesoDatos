@@ -1,30 +1,29 @@
 package pojo;
 
-import java.util.ArrayList;
-
 public class Pelicula {
 	
 	private int id;
 	private String titulo;
 	private int edad;
 	private String cine;
-	private ArrayList<Sala> salas;
+	private Sala sala;
 	
-	public Pelicula(String titulo, int edad, String cine) {
+	public Pelicula(String titulo, int edad, String cine, Sala sala) {
 		super();
 		this.titulo = titulo;
 		this.edad = edad;
 		this.cine = cine;
+		this.sala=sala;
 		
 	}
 
-	public Pelicula(int id, String titulo, int edad, String cine, ArrayList<Sala> salas) {
+	public Pelicula(int id, String titulo, int edad, String cine, Sala sala) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.edad = edad;
 		this.cine = cine;
-		this.salas = salas;
+		this.sala= sala;
 	}
 	
 	public int getId() {
@@ -55,19 +54,15 @@ public class Pelicula {
 		this.cine = cine;
 	}
 
-	public ArrayList<Sala> getSalas() {
-		return salas;
+	public Sala getSala() {
+		return sala;
 	}
 
-	public void setSalas(ArrayList<Sala> salas) {
-		this.salas = salas;
+	public void setSala_id(Sala sala) {
+		this.sala = sala;
 	}
 
-	@Override
-	public String toString() {
-		return "Pelicula [id=" + id + ", titulo=" + titulo + ", edad=" + edad + ", cine=" + cine + ", salas=" + salas
-				+ "]";
-	}
+
 
 	
 

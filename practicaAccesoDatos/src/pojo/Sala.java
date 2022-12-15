@@ -1,31 +1,30 @@
 package pojo;
 
+import java.util.ArrayList;
+
 public class Sala {
 	
 	private int id;
 	private int numero;
 	private String horario;
-	private String vose;
-	private int numeroAsientos;
-	private Pelicula pelicula;
+	private int asientos;
+	private ArrayList<Pelicula> peliculas;
 	
-	public Sala(int numero, String horario, String vose, int numeroAsientos, Pelicula pelicula) {
+	public Sala(int numero, String horario, int asientos, ArrayList<Pelicula> peliculas) {
 		super();
 		this.numero = numero;
 		this.horario = horario;
-		this.vose = vose;
-		this.numeroAsientos = numeroAsientos;
-		this.pelicula = pelicula;
+		this.asientos = asientos;
+		this.peliculas = peliculas;
 	}
 
-	public Sala(int id, int numero, String horario, String vose, int numeroAsientos, Pelicula pelicula) {
+	public Sala(int id, int numero, String horario, int asientos, ArrayList<Pelicula> peliculas) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.horario = horario;
-		this.vose = vose;
-		this.numeroAsientos = numeroAsientos;
-		this.pelicula = pelicula;
+		this.asientos = asientos;
+		this.peliculas = peliculas;
 	}
 
 	public int getNumero() {
@@ -44,28 +43,21 @@ public class Sala {
 		this.horario = horario;
 	}
 
-	public String getVose() {
-		return vose;
+
+	public int getAsientos() {
+		return asientos;
 	}
 
-	public void setVose(String vose) {
-		this.vose = vose;
+	public void setNumeroAsientos(int asientos) {
+		this.asientos = asientos;
 	}
 
-	public int getNumeroAsientos() {
-		return numeroAsientos;
+	public ArrayList<Pelicula> getPeliculas() {
+		return peliculas;
 	}
 
-	public void setNumeroAsientos(int numeroAsientos) {
-		this.numeroAsientos = numeroAsientos;
-	}
-
-	public Pelicula getPelicula() {
-		return pelicula;
-	}
-
-	public void setPelicula(Pelicula pelicula) {
-		this.pelicula = pelicula;
+	public void setPelicula(ArrayList<Pelicula> peliculas) {
+		this.peliculas = peliculas;
 	}
 
 	public int getId() {
@@ -74,13 +66,9 @@ public class Sala {
 
 	@Override
 	public String toString() {
-		return "Sala [id=" + id + ", numero=" + numero + ", horario=" + horario + ", vose=" + vose + ", numeroAsientos="
-				+ numeroAsientos + ", pelicula=" + pelicula + "]";
+		return "Sala [id=" + id + ", numero=" + numero + ", horario=" + horario + ", asientos=" + asientos
+				+ ", peliculas=" + peliculas + "]";
 	}
-	
-	
-	
-	
 	
 
 }

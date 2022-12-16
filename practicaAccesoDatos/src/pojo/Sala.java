@@ -1,4 +1,7 @@
 package pojo;
+/**
+ * 
+ */
 
 import java.util.ArrayList;
 
@@ -10,12 +13,12 @@ public class Sala {
 	private int asientos;
 	private ArrayList<Pelicula> peliculas;
 	
-	public Sala(int numero, String horario, int asientos, ArrayList<Pelicula> peliculas) {
+	public Sala(int numero, String horario, int asientos) {
 		super();
 		this.numero = numero;
 		this.horario = horario;
 		this.asientos = asientos;
-		this.peliculas = peliculas;
+		
 	}
 
 	public Sala(int id, int numero, String horario, int asientos, ArrayList<Pelicula> peliculas) {
@@ -25,6 +28,10 @@ public class Sala {
 		this.horario = horario;
 		this.asientos = asientos;
 		this.peliculas = peliculas;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public int getNumero() {
@@ -56,13 +63,11 @@ public class Sala {
 		return peliculas;
 	}
 
-	public void setPelicula(ArrayList<Pelicula> peliculas) {
+	public void setPeliculas(ArrayList<Pelicula> peliculas) {
 		this.peliculas = peliculas;
 	}
 
-	public int getId() {
-		return id;
-	}
+	
 
 	@Override
 	public String toString() {

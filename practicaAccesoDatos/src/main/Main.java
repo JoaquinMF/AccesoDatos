@@ -1,75 +1,127 @@
 package main;
 
+import java.util.ArrayList;
 import dao.PeliculaDao;
 import dao.SalaDao;
+import pojo.Pelicula;
+import pojo.Sala;
+
+
 
 public class Main {
 	
+	public static void main(String[] args) {
+		
 	SalaDao salaDao = new SalaDao();
+	
 	PeliculaDao peliculaDao = new PeliculaDao();
 	
 	//INSERCION
-    System.out.println("\n\nINSERCION DE DATOS:");
-	Sala c = new Sala("NombreMal", 951926104);
-	salaDao.insertar(c);
-	Sala d = salaDao.buscarPorId(1);
-	Libro l1 = new Libro(1, "El apagaon", "FILOSOFIA", d);
-	Libro l2 = new Libro(2, "Tormenta de espadas", "NARRATIVA", d);
-	Libro l3 = new Libro(3, "La inercia del silencio", "POESIA", d);
-	libroDao.insertar(l1);
-	libroDao.insertar(l2);
-	libroDao.insertar(l3);
-	Biblioteca p = new Biblioteca("Provincial", 951920530);
-	bibliotecaDao.insertar(p);
-	Biblioteca s = bibliotecaDao.buscarPorId(2);
-	Libro b1 = new Libro(4, "Hamlet", "TEATRO", s);
-	Libro b2 = new Libro(5, "Churchill: La biografia", "BIOGRAFIAS", s);
-	Libro b3 = new Libro(6, "Prisioneros de la geografia", "GEOGRAFIA", s);
-	libroDao.insertar(b1);
-	libroDao.insertar(b2);
-	libroDao.insertar(b3);
+	System.out.println("INSERCION DE DATOS");
+    
+	Sala azul = new Sala(2, "11:00 - 20:00", 300);
+	
+	salaDao.insertar(azul);
+	
+	azul = salaDao.buscarPorId(1);
+	
+	Pelicula theAvengers = new Pelicula(1, "The Avengers", 13, "YELMO CINES", azul);
+	
+	Pelicula theEternals = new Pelicula(2,"The Eternals", 13, "YELMO CINES",azul);
+	
+	Pelicula suicideSquad = new Pelicula(3,"Suicide Squad",18, "YELMO CINES",azul);
+	
+	peliculaDao.insertar(theAvengers);
+	
+	peliculaDao.insertar(theEternals);
+	
+	peliculaDao.insertar(suicideSquad);
+	
+	Sala verde =new Sala(3,"15:00 - 02:00",300);
+	
+	salaDao.insertar(verde);
+	
+	verde = salaDao.buscarPorId(2);
+	
+	Pelicula imLegend = new Pelicula(4,"Im Legend",18, "La Cañada", verde);
+	
+	Pelicula valerianMilPlanetas = new Pelicula(5,"Valerian y la Ciudad de los Mil Planetas",16,"La Cañada",verde);
+	
+	Pelicula rogueOne = new Pelicula(6,"Starwars: Rogue One",13,"La Cañada",verde);
+	
+	peliculaDao.insertar(imLegend);
+	
+	peliculaDao.insertar(valerianMilPlanetas);
+	
+	peliculaDao.insertar(rogueOne);
+	
 	System.out.println("Datos insertados");
 	
-	//CONSULTA
-    System.out.println("\n\nCONSULTA DE DATOS: ");
-    System.out.println("Bibliotecas de la base de datos con sus libros correspondientes: ");
-    ArrayList<Biblioteca> bibliotecas = bibliotecaDao.buscarTodos();
-    for (Biblioteca biblioteca : bibliotecas) {
-        System.out.println("Biblioteca: "+biblioteca.getNombre());
-        for (Libro libro : biblioteca.getLibros()) {
-            System.out.println("Libro: "+libro.getTitulo());
+	//Se consultan los datos
+    System.out.println("CONSULTA DE DATOS: ");
+    
+    System.out.println("Salas en la base de datos y sus peliculas: ");
+    
+    ArrayList<Sala> salas = salaDao.buscarTodos();
+    
+    for (Sala sala : salas) {
+    	
+        System.out.println("Sala: "+sala.getNumero());
+        
+        for (Pelicula pelicula : sala.getPeliculas()) {
+        	
+            System.out.println("Pelicula: "+pelicula.getTitulo());
         }
     }
     
-	//MODIFICACION
-    System.out.println("\n\nMODIFICACION DE DATOS:");
-    l2.setTitulo("The Witcher");
-    libroDao.modificar(l2);
-    Libro l1modificado = libroDao.buscarPorId(l2.getId());
-    System.out.println("Titulo modificado: " + l1modificado.getTitulo());
+	//Se modifican los datos
+    System.out.println("MODIFICACION DE DATOS:");
     
-    c.setNombre("Cervantes");
-    bibliotecaDao.modificar(c);
-    System.out.println("Nombre modificado: " + c.getNombre());
+    theAvengers.setTitulo("The Avengers: Endgame");
+    
+    peliculaDao.modificar(theAvengers);
+    
+    Pelicula theAvengersEndGame = peliculaDao.buscarPorId(theAvengers.getId());
+    
+    System.out.println("Titulo modificado: " + theAvengersEndGame.getTitulo());
+    
+    azul.setNumero(5);
+    
+    salaDao.modificar(azul);
+    
+    System.out.println("Numero modificado: " + azul.getNumero());
 
-	//ELIMINACION
-    System.out.println("\n\nELIMINACION DE DATOS:");
-    libroDao.borrar(l3);
-    Libro l3borrado = libroDao.buscarPorId(l3.getId());
-    if (l3borrado == null) {
-        System.out.println("Libro borrado.");
+	//Se Eliminan datos
+    System.out.println("ELIMINACION DE DATOS:");
+    
+   peliculaDao.borrar(valerianMilPlanetas);
+   
+   Pelicula valerianMilPlanetasBorrado = peliculaDao.buscarPorId(valerianMilPlanetas.getId());
+   
+   
+    if (valerianMilPlanetasBorrado == null) {
+    	
+        System.out.println("Pelicula borrada");
+        
     } else {
-        System.err.println("Libro no borrado.");
+    	
+        System.err.println("No se borro la pelicula");
     }
     
-    bibliotecaDao.borrar(s);
-    Biblioteca pborrado = bibliotecaDao.buscarPorId(s.getId());
-    if (pborrado == null) {
-        System.out.println("Biblioteca borrada.");
+    salaDao.borrar(verde);
+    
+    Sala verdeBorrada = salaDao.buscarPorId(verde.getId());
+    
+    if (verdeBorrada == null) {
+    	
+        System.out.println("Se borro la sala");
+        
     } else {
-        System.err.println("Biblioteca no borrada.");
+    	
+        System.err.println("No se borro la sala");
     }
 	
 	
 
+	}
 }

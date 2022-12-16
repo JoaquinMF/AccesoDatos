@@ -23,7 +23,7 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 		connection = openConnection();
 		
 		ArrayList<Pelicula> peliculas=new ArrayList<>();
-		Pelicula pelicula=null;
+		
 		String query ="select * from peliculas";
 		
 		try {
@@ -33,10 +33,24 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 			
 			while(rs.next()) {
 				
-				pelicula = new Pelicula(rs.getInt("id"),rs.getString("titulo"),rs.getInt("edad"),rs.getString("cine"),null);
+			Pelicula pelicula = new Pelicula(rs.getInt("id"),rs.getString("titulo"),rs.getInt("edad"),rs.getString("cine"),null);
 			
-				peliculas.add(pelicula);
-		}
+			
+			String query_sala = "select * from salas where id = ?";
+            PreparedStatement ps_sala = connection.prepareStatement(query_sala);
+            ps_sala.setInt(1, rs.getInt("id")); 
+            ResultSet rs_sala = ps_sala.executeQuery();
+            
+            while(rs_sala.next()) {
+
+                Sala sala = new Sala(rs_sala.getInt("id"),rs_sala.getInt("numero"),rs_sala.getString("horario"),rs_sala.getInt("asientos"),peliculas);
+
+                 if(rs_sala.getInt("id") == rs.getInt("id")) {
+                     pelicula.setSala(sala); 
+                 }
+             }
+            peliculas.add(pelicula);
+			}
 		
 		} catch (SQLException e) {
 			
@@ -45,26 +59,47 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 		
 		closeConnection();
 		
-		
 		return peliculas;
 	}
 
 	@Override
-	public Pelicula buscarPorId(int i) {
+	public Pelicula buscarPorId(int id) {
 		
 		connection = openConnection();
-		
-		Pelicula pelicula=null;
-		
 		String query = "select * from peliculas where id = ?";
+		Pelicula pelicula=null;
 		
 		try {
 			PreparedStatement ps=connection.prepareStatement(query);
-			ps.setInt(1, i);
+			ps.setInt(1, id);
 			ResultSet rs=ps.executeQuery();
 			
 			while(rs.next()) {
-				pelicula = new Pelicula(rs.getInt("id"),rs.getString("titulo"),rs.getInt("edad"),rs.getString("cine"),null);
+				int sala_id = rs.getInt("salas_id");
+                Sala sala = null;
+                
+                String query_sala = "select * from salas where id = ?";
+                PreparedStatement ps_sala= connection.prepareStatement(query_sala);
+                ps_sala.setInt(1, sala_id); 
+                ResultSet rs_sala = ps_sala.executeQuery();
+                
+                while(rs_sala.next()) {
+                	sala = new Sala(
+                			rs_sala.getInt("id"), 
+                			rs_sala.getInt("numero"), 
+                			rs_sala.getString("horario"),
+                			rs_sala.getInt("asientos"),
+                			null
+                	);
+                }
+                pelicula = new Pelicula(
+                		rs.getInt("id"), 
+                		rs.getString("titulo"),
+                		rs.getInt("edad"),
+                		rs.getString("cine"), 
+                		sala
+                );
+                
 			}
 			
 			
@@ -81,7 +116,7 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 	public void insertar(Pelicula pelicula) {
 		
 		connection = openConnection();
-		String query ="insert into series (titulo, edad, cine, sala_id)"+"values(?,?,?,?)";
+		String query ="insert into peliculas (titulo, edad, cine, salas_id) values (?,?,?,?)";
 		
 		try {
 			PreparedStatement ps=connection.prepareStatement(query);
@@ -107,18 +142,18 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 		
 		
 		int id = pelicula.getId();
-		String titulo=pelicula.getTitulo();
-		int edad=pelicula.getEdad();
-		String cine=pelicula.getCine();
+		String tituloNuevo=pelicula.getTitulo();
+		int edadNueva=pelicula.getEdad();
+		String cineNuevo=pelicula.getCine();
 		Sala sala=pelicula.getSala();
-		String query ="update series set titulo = ?, edad = ?, cine = ?, sala_id = ? where id = ?";
+		String query ="update peliculas set titulo = ?, edad = ?, cine = ?, salas_id = ? where id = ?";
 		
 		try {
 			PreparedStatement ps=connection.prepareStatement(query);
 			
-			ps.setString(1,titulo);
-		    ps.setInt(2,edad);
-		    ps.setString(3,cine);
+			ps.setString(1,tituloNuevo);
+		    ps.setInt(2,edadNueva);
+		    ps.setString(3,cineNuevo);
 		    ps.setInt(4,sala.getId());
 		    ps.setInt(5, id);
 		    ps.executeUpdate();
@@ -136,11 +171,11 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 	}
 
 	@Override
-	public void borrar(Pelicula pelicula) {
+	public void borrar(Pelicula peliculas) {
 		
 		connection=openConnection();
 		
-		int id=pelicula.getId();
+		int id=peliculas.getId();
 		
 		String query="DELETE FROM peliculas WHERE id = ?";
 		
@@ -163,7 +198,7 @@ public class PeliculaDao extends ObjetoDao implements InterfazDao<Pelicula> {
 		
 		connection=openConnection();
 		
-		String query = "DELETE FROM peliculas WHERE sala_id=?";
+		String query = "DELETE FROM peliculas WHERE salas_id=?";
 		
 		try {
 			

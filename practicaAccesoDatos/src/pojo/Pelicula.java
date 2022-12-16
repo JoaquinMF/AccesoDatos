@@ -26,8 +26,20 @@ public class Pelicula {
 		this.sala= sala;
 	}
 	
+	public Pelicula (int id, String titulo, int edad, String cine) {
+		this.id = id;
+		this.titulo = titulo;
+		this.edad = edad;
+		this.cine = cine;
+		
+	}
+	
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitulo() {
@@ -62,9 +74,11 @@ public class Pelicula {
 		this.sala = sala;
 	}
 
-
-
-	
+	@Override
+	public String toString() {
+		return "Pelicula [id=" + id + ", titulo=" + titulo + ", edad=" + edad + ", cine=" + cine + ", sala=" + sala
+				+ "]";
+	}
 
 	
 }
